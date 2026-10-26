@@ -32,3 +32,6 @@ terraform.rc
 # Windows folder metadata
 desktop.ini
 Thumbs.db
+
+# Local-only override files
+*_override.tf
