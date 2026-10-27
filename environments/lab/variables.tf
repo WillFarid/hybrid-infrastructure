@@ -79,3 +79,22 @@ variable "vpc_cidr" {
     error_message = "vpc_cidr overlaps onprem_cidr. Pick a range that does not overlap the on-premises network."
   }
 }
+
+variable "directory_domain_name" {
+  description = "Domain name of the AWS Managed AD. Must differ from the on-premises domain (corp.example.com)."
+  type        = string
+  default     = "cloud.example.com"
+}
+
+variable "directory_netbios_name" {
+  description = "NetBIOS (short) name of the AWS domain."
+  type        = string
+  default     = "CLOUD"
+}
+
+variable "directory_admin_password" {
+  description = "Initial password of the directory's Admin account. Supply it through the TF_VAR_directory_admin_password environment variable, never in a committed file."
+  type        = string
+  sensitive   = true
+  nullable    = false
+}

@@ -16,3 +16,13 @@ output "onprem_cidr" {
   description = "Address range of the simulated on-premises side (the VPN and DNS steps route to it)."
   value       = var.onprem_cidr
 }
+
+output "directory_id" {
+  description = "ID of the AWS Managed AD directory."
+  value       = module.directory.directory_id
+}
+
+output "directory_dns_ips" {
+  description = "IP addresses of the domain controllers (also the VPC's DNS servers)."
+  value       = module.directory.dns_ip_addresses
+}

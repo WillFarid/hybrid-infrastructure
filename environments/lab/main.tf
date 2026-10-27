@@ -25,3 +25,17 @@ module "network" {
   server_subnet_cidrs    = local.server_subnet_cidrs
   endpoint_subnet_cidrs  = local.endpoint_subnet_cidrs
 }
+
+# --- Identity: AWS Managed Microsoft AD ----------------------------------------------
+module "directory" {
+  source = "../../modules/directory"
+
+  name       = local.name
+  vpc_id     = module.network.vpc_id
+  subnet_ids = module.network.directory_subnet_ids # chained from the network module
+
+  domain_name    = var.directory_domain_name
+  netbios_name   = var.directory_netbios_name
+  admin_password = var.directory_admin_password
+  edition        = "Standard"
+}
