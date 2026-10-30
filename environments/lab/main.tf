@@ -39,3 +39,25 @@ module "directory" {
   admin_password = var.directory_admin_password
   edition        = "Standard"
 }
+
+# --- Compute: Windows member servers, joined to the domain automatically ---------------
+module "windows_servers" {
+  source = "../../modules/windows-servers"
+
+  name     = local.name
+  vpc_id   = module.network.vpc_id
+  vpc_cidr = module.network.vpc_cidr
+
+  subnet_ids = module.network.server_subnet_ids # one server per AZ
+
+  directory_id     = module.directory.directory_id
+  directory_name   = module.directory.domain_name
+  dns_ip_addresses = tolist(module.directory.dns_ip_addresses)
+
+  instance_type = "t3.medium"
+
+  # The servers must start AFTER the directory's DHCP options are in place,
+  # otherwise they boot with the wrong DNS servers and cannot find the domain.
+  # (Module-level depends_on waits for EVERYTHING in the directory module.)
+  depends_on = [module.directory]
+}

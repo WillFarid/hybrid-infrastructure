@@ -26,3 +26,8 @@ output "directory_dns_ips" {
   description = "IP addresses of the domain controllers (also the VPC's DNS servers)."
   value       = module.directory.dns_ip_addresses
 }
+
+output "windows_server_private_ips" {
+  description = "Private IP addresses of the domain-joined Windows servers."
+  value       = module.windows_servers.private_ips
+}

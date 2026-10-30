@@ -18,6 +18,7 @@ No providers.
 | ---- | ------ | ------- |
 | <a name="module_directory"></a> [directory](#module\_directory) | ../../modules/directory | n/a |
 | <a name="module_network"></a> [network](#module\_network) | ../../modules/network | n/a |
+| <a name="module_windows_servers"></a> [windows\_servers](#module\_windows\_servers) | ../../modules/windows-servers | n/a |
 
 ## Resources
 
@@ -47,4 +48,5 @@ No resources.
 | <a name="output_onprem_cidr"></a> [onprem\_cidr](#output\_onprem\_cidr) | Address range of the simulated on-premises side (the VPN and DNS steps route to it). |
 | <a name="output_vpc_cidr"></a> [vpc\_cidr](#output\_vpc\_cidr) | Address range of the AWS side. |
 | <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | ID of the VPC. |
+| <a name="output_windows_server_private_ips"></a> [windows\_server\_private\_ips](#output\_windows\_server\_private\_ips) | Private IP addresses of the domain-joined Windows servers. |
 <!-- END_TF_DOCS -->
