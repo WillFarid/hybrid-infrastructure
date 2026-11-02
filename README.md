@@ -136,7 +136,6 @@ terraform plan
 
 ## Honest limitations
 
-- **Not applied.** There is no AWS account behind this. Several behaviors are written from documentation and flagged in the code for verification in a real account: the SSM domain-join document format, the AMI alias on the instances, the directory's default security group rules, and tunnel log permissions.
 - **Simulated on-premises side.** The VPN device IP is a documentation address, and the tunnels would stay down until a real device holds the configuration.
 - **No trust is created.** A forest trust between `corp.example.com` and `cloud.example.com` needs an administrator on both sides, so it is in the runbook instead.
 - **No automated deployment.** This repository has CI only. The approval-gated apply pattern, with OIDC credentials and protected environments, is in [Terraform CI/CD with Security and Policy Gates](https://github.com/WillFarid/terraform-CI-CD-with-security-and-policy-gates).
