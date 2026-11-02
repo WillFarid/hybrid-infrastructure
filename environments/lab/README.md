@@ -19,6 +19,7 @@ No providers.
 | <a name="module_directory"></a> [directory](#module\_directory) | ../../modules/directory | n/a |
 | <a name="module_file_share"></a> [file\_share](#module\_file\_share) | ../../modules/file-share | n/a |
 | <a name="module_network"></a> [network](#module\_network) | ../../modules/network | n/a |
+| <a name="module_vpn"></a> [vpn](#module\_vpn) | ../../modules/vpn | n/a |
 | <a name="module_windows_servers"></a> [windows\_servers](#module\_windows\_servers) | ../../modules/windows-servers | n/a |
 
 ## Resources
@@ -30,6 +31,7 @@ No resources.
 | Name | Description | Type | Default | Required |
 | ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_azs"></a> [azs](#input\_azs) | Availability zones. Passed in (not looked up) so plan works without AWS credentials. | `list(string)` | <pre>[<br/>  "us-east-1a",<br/>  "us-east-1b"<br/>]</pre> | no |
+| <a name="input_customer_gateway_ip"></a> [customer\_gateway\_ip](#input\_customer\_gateway\_ip) | PUBLIC IP of the on-premises VPN device. The default is a documentation address (RFC 5737), so the tunnels stay down until a real device is configured. | `string` | `"203.0.113.10"` | no |
 | <a name="input_directory_admin_password"></a> [directory\_admin\_password](#input\_directory\_admin\_password) | Initial password of the directory's Admin account. Supply it through the TF\_VAR\_directory\_admin\_password environment variable, never in a committed file. | `string` | n/a | yes |
 | <a name="input_directory_domain_name"></a> [directory\_domain\_name](#input\_directory\_domain\_name) | Domain name of the AWS Managed AD. Must differ from the on-premises domain (corp.example.com). | `string` | `"cloud.example.com"` | no |
 | <a name="input_directory_netbios_name"></a> [directory\_netbios\_name](#input\_directory\_netbios\_name) | NetBIOS (short) name of the AWS domain. | `string` | `"CLOUD"` | no |
@@ -50,5 +52,7 @@ No resources.
 | <a name="output_onprem_cidr"></a> [onprem\_cidr](#output\_onprem\_cidr) | Address range of the simulated on-premises side (the VPN and DNS steps route to it). |
 | <a name="output_vpc_cidr"></a> [vpc\_cidr](#output\_vpc\_cidr) | Address range of the AWS side. |
 | <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | ID of the VPC. |
+| <a name="output_vpn_connection_id"></a> [vpn\_connection\_id](#output\_vpn\_connection\_id) | ID of the Site-to-Site VPN connection. |
+| <a name="output_vpn_tunnel_addresses"></a> [vpn\_tunnel\_addresses](#output\_vpn\_tunnel\_addresses) | Public IPs of the two AWS tunnel endpoints (peers for the on-premises device). |
 | <a name="output_windows_server_private_ips"></a> [windows\_server\_private\_ips](#output\_windows\_server\_private\_ips) | Private IP addresses of the domain-joined Windows servers. |
 <!-- END_TF_DOCS -->

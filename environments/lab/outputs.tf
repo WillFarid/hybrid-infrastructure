@@ -36,3 +36,13 @@ output "file_share_dns_name" {
   description = "DNS name of the file share. Map it as \\\\<dns_name>\\share from a domain-joined server."
   value       = module.file_share.dns_name
 }
+
+output "vpn_connection_id" {
+  description = "ID of the Site-to-Site VPN connection."
+  value       = module.vpn.vpn_connection_id
+}
+
+output "vpn_tunnel_addresses" {
+  description = "Public IPs of the two AWS tunnel endpoints (peers for the on-premises device)."
+  value       = [module.vpn.tunnel1_address, module.vpn.tunnel2_address]
+}

@@ -98,3 +98,9 @@ variable "directory_admin_password" {
   sensitive   = true
   nullable    = false
 }
+
+variable "customer_gateway_ip" {
+  description = "PUBLIC IP of the on-premises VPN device. The default is a documentation address (RFC 5737), so the tunnels stay down until a real device is configured."
+  type        = string
+  default     = "203.0.113.10"
+}

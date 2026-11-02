@@ -83,3 +83,17 @@ module "file_share" {
   # The lab is disposable. A real file share keeps its final backup.
   skip_final_backup = true
 }
+
+# --- Connectivity: Site-to-Site VPN to the simulated on-premises network -----------------
+module "vpn" {
+  source = "../../modules/vpn"
+
+  name     = local.name
+  vpc_id   = module.network.vpc_id
+  vpc_cidr = module.network.vpc_cidr
+
+  onprem_cidr    = var.onprem_cidr
+  route_table_id = module.network.private_route_table_id # the on-premises route is propagated here
+
+  customer_gateway_ip = var.customer_gateway_ip
+}
