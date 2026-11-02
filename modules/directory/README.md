@@ -28,6 +28,7 @@ No modules.
 | [aws_directory_service_log_subscription.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/directory_service_log_subscription) | resource |
 | [aws_vpc_dhcp_options.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_dhcp_options) | resource |
 | [aws_vpc_dhcp_options_association.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_dhcp_options_association) | resource |
+| [aws_vpc_security_group_ingress_rule.ad_from_allowed_cidrs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule) | resource |
 | [aws_iam_policy_document.directory_logs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 
 ## Inputs
@@ -35,6 +36,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 | ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_admin_password"></a> [admin\_password](#input\_admin\_password) | Initial password of the directory's built-in "Admin" account.<br/>AWS Managed AD cannot generate this for us, so it is the one secret that<br/>passes through Terraform. It is marked sensitive and ignored after creation. | `string` | n/a | yes |
+| <a name="input_allowed_cidrs"></a> [allowed\_cidrs](#input\_allowed\_cidrs) | Address ranges (for example the on-premises network) allowed to reach the domain controllers on the Active Directory ports. Empty = only the VPC. | `list(string)` | `[]` | no |
 | <a name="input_domain_name"></a> [domain\_name](#input\_domain\_name) | Fully qualified domain name of the directory, e.g. cloud.example.com. Must differ from the on-premises domain. | `string` | n/a | yes |
 | <a name="input_edition"></a> [edition](#input\_edition) | Standard (up to about 30,000 objects) or Enterprise (up to about 500,000). | `string` | `"Standard"` | no |
 | <a name="input_log_retention_days"></a> [log\_retention\_days](#input\_log\_retention\_days) | How long to keep directory security logs in CloudWatch. | `number` | `365` | no |

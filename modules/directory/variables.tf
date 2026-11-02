@@ -96,3 +96,9 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "allowed_cidrs" {
+  description = "Address ranges (for example the on-premises network) allowed to reach the domain controllers on the Active Directory ports. Empty = only the VPC."
+  type        = list(string)
+  default     = []
+}

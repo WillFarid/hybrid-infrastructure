@@ -104,3 +104,15 @@ variable "customer_gateway_ip" {
   type        = string
   default     = "203.0.113.10"
 }
+
+variable "onprem_domain_name" {
+  description = "DNS name of the simulated on-premises Active Directory domain. Must differ from the AWS domain (cloud.example.com)."
+  type        = string
+  default     = "corp.example.com"
+}
+
+variable "onprem_dns_ip" {
+  description = "IP address of the simulated on-premises DNS server (a domain controller). Must sit inside onprem_cidr."
+  type        = string
+  default     = "192.168.1.10"
+}

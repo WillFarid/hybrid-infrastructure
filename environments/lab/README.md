@@ -18,6 +18,7 @@ No providers.
 | ---- | ------ | ------- |
 | <a name="module_directory"></a> [directory](#module\_directory) | ../../modules/directory | n/a |
 | <a name="module_file_share"></a> [file\_share](#module\_file\_share) | ../../modules/file-share | n/a |
+| <a name="module_hybrid_dns"></a> [hybrid\_dns](#module\_hybrid\_dns) | ../../modules/hybrid-dns | n/a |
 | <a name="module_network"></a> [network](#module\_network) | ../../modules/network | n/a |
 | <a name="module_vpn"></a> [vpn](#module\_vpn) | ../../modules/vpn | n/a |
 | <a name="module_windows_servers"></a> [windows\_servers](#module\_windows\_servers) | ../../modules/windows-servers | n/a |
@@ -38,6 +39,8 @@ No resources.
 | <a name="input_environment"></a> [environment](#input\_environment) | Deployment environment. | `string` | `"lab"` | no |
 | <a name="input_mock_mode"></a> [mock\_mode](#input\_mock\_mode) | true = fake credentials and no calls to AWS (offline plan). false for a real deployment. | `bool` | `true` | no |
 | <a name="input_onprem_cidr"></a> [onprem\_cidr](#input\_onprem\_cidr) | Address range of the simulated on-premises network. The VPC must never overlap it. | `string` | `"192.168.0.0/16"` | no |
+| <a name="input_onprem_dns_ip"></a> [onprem\_dns\_ip](#input\_onprem\_dns\_ip) | IP address of the simulated on-premises DNS server (a domain controller). Must sit inside onprem\_cidr. | `string` | `"192.168.1.10"` | no |
+| <a name="input_onprem_domain_name"></a> [onprem\_domain\_name](#input\_onprem\_domain\_name) | DNS name of the simulated on-premises Active Directory domain. Must differ from the AWS domain (cloud.example.com). | `string` | `"corp.example.com"` | no |
 | <a name="input_project"></a> [project](#input\_project) | Project name, used in resource names and tags. | `string` | `"hybrid"` | no |
 | <a name="input_region"></a> [region](#input\_region) | AWS region to deploy into. | `string` | `"us-east-1"` | no |
 | <a name="input_vpc_cidr"></a> [vpc\_cidr](#input\_vpc\_cidr) | Address range of the AWS VPC. Must be a /16 and must not overlap onprem\_cidr. | `string` | `"10.2.0.0/16"` | no |
@@ -48,6 +51,7 @@ No resources.
 | ---- | ----------- |
 | <a name="output_directory_dns_ips"></a> [directory\_dns\_ips](#output\_directory\_dns\_ips) | IP addresses of the domain controllers (also the VPC's DNS servers). |
 | <a name="output_directory_id"></a> [directory\_id](#output\_directory\_id) | ID of the AWS Managed AD directory. |
+| <a name="output_dns_inbound_endpoint_ips"></a> [dns\_inbound\_endpoint\_ips](#output\_dns\_inbound\_endpoint\_ips) | Resolver inbound endpoint IPs. The on-premises DNS server forwards AWS names to these. |
 | <a name="output_file_share_dns_name"></a> [file\_share\_dns\_name](#output\_file\_share\_dns\_name) | DNS name of the file share. Map it as \\<dns\_name>\share from a domain-joined server. |
 | <a name="output_onprem_cidr"></a> [onprem\_cidr](#output\_onprem\_cidr) | Address range of the simulated on-premises side (the VPN and DNS steps route to it). |
 | <a name="output_vpc_cidr"></a> [vpc\_cidr](#output\_vpc\_cidr) | Address range of the AWS side. |

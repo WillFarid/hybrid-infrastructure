@@ -86,3 +86,52 @@ resource "aws_directory_service_log_subscription" "this" {
 
   depends_on = [aws_cloudwatch_log_resource_policy.directory]
 }
+
+# --- Letting the on-premises network talk to the domain controllers --------------------
+# AWS creates a security group for the domain controllers. For on-premises machines
+# (or an on-premises domain, for a trust) to authenticate against them over the VPN,
+# these are the ports an Active Directory administrator will recognise.
+#
+# To VERIFY in a real account: the group AWS creates may already allow traffic from
+# inside the VPC. These rules are additive, and they open the on-premises range only.
+locals {
+  ad_ports = {
+    "dns-udp"        = { protocol = "udp", from = 53, to = 53, label = "DNS" }
+    "dns-tcp"        = { protocol = "tcp", from = 53, to = 53, label = "DNS" }
+    "kerberos-tcp"   = { protocol = "tcp", from = 88, to = 88, label = "Kerberos" }
+    "kerberos-udp"   = { protocol = "udp", from = 88, to = 88, label = "Kerberos" }
+    "ntp-udp"        = { protocol = "udp", from = 123, to = 123, label = "Windows Time" }
+    "rpc-mapper"     = { protocol = "tcp", from = 135, to = 135, label = "RPC endpoint mapper" }
+    "ldap-tcp"       = { protocol = "tcp", from = 389, to = 389, label = "LDAP" }
+    "ldap-udp"       = { protocol = "udp", from = 389, to = 389, label = "LDAP" }
+    "smb"            = { protocol = "tcp", from = 445, to = 445, label = "SMB" }
+    "kpasswd-tcp"    = { protocol = "tcp", from = 464, to = 464, label = "Kerberos password change" }
+    "kpasswd-udp"    = { protocol = "udp", from = 464, to = 464, label = "Kerberos password change" }
+    "ldaps"          = { protocol = "tcp", from = 636, to = 636, label = "LDAP over TLS" }
+    "global-cat"     = { protocol = "tcp", from = 3268, to = 3268, label = "Global Catalog" }
+    "global-cat-ssl" = { protocol = "tcp", from = 3269, to = 3269, label = "Global Catalog over TLS" }
+    "adws"           = { protocol = "tcp", from = 9389, to = 9389, label = "AD Web Services" }
+    "rpc-dynamic"    = { protocol = "tcp", from = 49152, to = 65535, label = "RPC dynamic ports" }
+    "icmp"           = { protocol = "icmp", from = -1, to = -1, label = "ICMP (ping, path MTU)" }
+  }
+
+  # One rule per (address range, port) pair.
+  ad_rules = {
+    for pair in setproduct(var.allowed_cidrs, keys(local.ad_ports)) :
+    "${replace(pair[0], "/", "-")}-${pair[1]}" => {
+      cidr = pair[0]
+      port = local.ad_ports[pair[1]]
+    }
+  }
+}
+
+resource "aws_vpc_security_group_ingress_rule" "ad_from_allowed_cidrs" {
+  for_each = local.ad_rules
+
+  security_group_id = aws_directory_service_directory.this.security_group_id
+  description       = "AD ${each.value.port.label} from ${each.value.cidr}"
+  ip_protocol       = each.value.port.protocol
+  from_port         = each.value.port.from
+  to_port           = each.value.port.to
+  cidr_ipv4         = each.value.cidr
+}

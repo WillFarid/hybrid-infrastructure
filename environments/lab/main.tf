@@ -38,6 +38,9 @@ module "directory" {
   netbios_name   = var.directory_netbios_name
   admin_password = var.directory_admin_password
   edition        = "Standard"
+
+  # Let the on-premises network reach the domain controllers on the AD ports.
+  allowed_cidrs = [var.onprem_cidr]
 }
 
 # --- Compute: Windows member servers, joined to the domain automatically ---------------
@@ -96,4 +99,22 @@ module "vpn" {
   route_table_id = module.network.private_route_table_id # the on-premises route is propagated here
 
   customer_gateway_ip = var.customer_gateway_ip
+}
+
+# --- Hybrid DNS: names resolve in both directions across the VPN -------------------------
+module "hybrid_dns" {
+  source = "../../modules/hybrid-dns"
+
+  name                = local.name
+  vpc_id              = module.network.vpc_id
+  endpoint_subnet_ids = module.network.endpoint_subnet_ids
+
+  onprem_cidr        = var.onprem_cidr
+  onprem_domain_name = var.onprem_domain_name
+  onprem_dns_ip      = var.onprem_dns_ip
+
+  directory_id = module.directory.directory_id
+
+  # DNS across the link only makes sense once the link exists.
+  depends_on = [module.vpn]
 }

@@ -46,3 +46,8 @@ output "vpn_tunnel_addresses" {
   description = "Public IPs of the two AWS tunnel endpoints (peers for the on-premises device)."
   value       = [module.vpn.tunnel1_address, module.vpn.tunnel2_address]
 }
+
+output "dns_inbound_endpoint_ips" {
+  description = "Resolver inbound endpoint IPs. The on-premises DNS server forwards AWS names to these."
+  value       = module.hybrid_dns.inbound_endpoint_ips
+}
