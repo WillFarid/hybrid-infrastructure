@@ -31,3 +31,8 @@ output "windows_server_private_ips" {
   description = "Private IP addresses of the domain-joined Windows servers."
   value       = module.windows_servers.private_ips
 }
+
+output "file_share_dns_name" {
+  description = "DNS name of the file share. Map it as \\\\<dns_name>\\share from a domain-joined server."
+  value       = module.file_share.dns_name
+}

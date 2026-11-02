@@ -61,3 +61,25 @@ module "windows_servers" {
   # (Module-level depends_on waits for EVERYTHING in the directory module.)
   depends_on = [module.directory]
 }
+
+# --- Storage: FSx for Windows SMB file share --------------------------------------------
+module "file_share" {
+  source = "../../modules/file-share"
+
+  name     = local.name
+  vpc_id   = module.network.vpc_id
+  vpc_cidr = module.network.vpc_cidr
+
+  subnet_ids   = module.network.server_subnet_ids
+  directory_id = module.directory.directory_id
+
+  # Only machines wearing the Windows servers' security group can reach the share.
+  client_security_group_id = module.windows_servers.security_group_id
+
+  deployment_type     = "MULTI_AZ_1"
+  storage_capacity    = 32
+  throughput_capacity = 32
+
+  # The lab is disposable. A real file share keeps its final backup.
+  skip_final_backup = true
+}

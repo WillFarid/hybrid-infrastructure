@@ -17,6 +17,7 @@ No providers.
 | Name | Source | Version |
 | ---- | ------ | ------- |
 | <a name="module_directory"></a> [directory](#module\_directory) | ../../modules/directory | n/a |
+| <a name="module_file_share"></a> [file\_share](#module\_file\_share) | ../../modules/file-share | n/a |
 | <a name="module_network"></a> [network](#module\_network) | ../../modules/network | n/a |
 | <a name="module_windows_servers"></a> [windows\_servers](#module\_windows\_servers) | ../../modules/windows-servers | n/a |
 
@@ -45,6 +46,7 @@ No resources.
 | ---- | ----------- |
 | <a name="output_directory_dns_ips"></a> [directory\_dns\_ips](#output\_directory\_dns\_ips) | IP addresses of the domain controllers (also the VPC's DNS servers). |
 | <a name="output_directory_id"></a> [directory\_id](#output\_directory\_id) | ID of the AWS Managed AD directory. |
+| <a name="output_file_share_dns_name"></a> [file\_share\_dns\_name](#output\_file\_share\_dns\_name) | DNS name of the file share. Map it as \\<dns\_name>\share from a domain-joined server. |
 | <a name="output_onprem_cidr"></a> [onprem\_cidr](#output\_onprem\_cidr) | Address range of the simulated on-premises side (the VPN and DNS steps route to it). |
 | <a name="output_vpc_cidr"></a> [vpc\_cidr](#output\_vpc\_cidr) | Address range of the AWS side. |
 | <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | ID of the VPC. |
